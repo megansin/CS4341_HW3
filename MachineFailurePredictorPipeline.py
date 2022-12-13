@@ -134,8 +134,8 @@ def main():
     forest = RandomForestClassifier()
     param_grid_forest = {
         'n_estimators': [10, 20, 50, 100],
-        'criterion': ['gini', 'entropy', 'log_loss'],
-        'min_samples_split': [2, 3]
+        'max_depth': [5, 10, None],
+        'max_features': ['sqrt', 'log2', None]
     }
 
     grid_forest = GridSearchCV(estimator=forest, param_grid=param_grid_forest, cv=5, n_jobs=-1)
