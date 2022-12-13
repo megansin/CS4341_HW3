@@ -172,9 +172,9 @@ def main():
     best_index = f1_scores.index(max(f1_scores)) + 1
 
     print("Training ML Models:")
-    print(tabulate(testing_table, headers='firstrow', tablefmt='fancy_grid'))
-    print("Testing ML Models:")
     print(tabulate(training_table, headers='firstrow', tablefmt='fancy_grid'))
+    print("Testing ML Models:")
+    print(tabulate(testing_table, headers='firstrow', tablefmt='fancy_grid'))
     print("")
     print("Best ML Model: ", testing_table[best_index][0])
 
