@@ -68,7 +68,8 @@ def main():
     param_grid_svc = {
         'kernel': ['linear', 'poly', 'rbf'],
         'gamma': ['scale', 'auto'],
-        'degree': [2, 3, 4]
+        'degree': [2, 3, 4],
+        'class_weight': ['balanced', None]
     }
 
     grid_svc = GridSearchCV(estimator=svc, param_grid=param_grid_svc, cv=5, n_jobs=-1)
