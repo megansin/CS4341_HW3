@@ -50,15 +50,15 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
     # Artificial Neural Network
-    mlp = MLPClassifier(max_iter=500)
+    mlp = MLPClassifier()
     param_grid_mlp = {
         'hidden_layer_sizes': [(200,), (226,), (226, 226), (226, 226, 226)],
         'activation': ['identity', 'tanh', 'relu'],
-        'solver': ['sgd', 'adam'],
-        'alpha': [0.01, 0.05, 0.10],
+        # 'solver': ['sgd', 'adam'],
+        'alpha': [0.0001, 0.001, 0.005],
         'learning_rate': ['constant', 'adaptive']
     }
-    grid_mlp = GridSearchCV(mlp, param_grid_mlp, n_jobs=-1, cv=2)
+    grid_mlp = GridSearchCV(mlp, param_grid_mlp, n_jobs=-1, cv=5)
     grid_mlp.fit(X_train, y_train)
     scores_mlp = cross_val_score(grid_mlp.best_estimator_, X_train, y_train, cv=5, scoring='f1_macro')
     f1_mlp = scores_mlp.mean()
@@ -67,7 +67,8 @@ def main():
     svc = SVC()
     param_grid_svc = {
         'kernel': ['linear', 'poly', 'rbf'],
-        'gamma': ['scale', 'auto']
+        'gamma': ['scale', 'auto'],
+        'degree': [2, 3, 4]
     }
 
     grid_svc = GridSearchCV(estimator=svc, param_grid=param_grid_svc, cv=5, n_jobs=-1)
