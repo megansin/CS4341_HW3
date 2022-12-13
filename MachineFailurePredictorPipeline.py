@@ -12,6 +12,7 @@ import warnings
 
 
 def main():
+
     warnings.filterwarnings("ignore")
 
     df = pd.read_csv('ai4i2020.csv')
@@ -134,6 +135,7 @@ def main():
     param_grid_forest = {
         'n_estimators': [10, 20, 50, 100],
         'criterion': ['gini', 'entropy', 'log_loss'],
+        'min_samples_split': [2, 3]
     }
 
     grid_forest = GridSearchCV(estimator=forest, param_grid=param_grid_forest, cv=5, n_jobs=-1)
@@ -158,7 +160,7 @@ def main():
     f1_forest_test = f1_score(y_test, grid_forest.predict(X_test), average='macro')
 
     testing_table = [
-        ['ML Trained Model', 'Best Set of Parameters', 'F1-score on the 5-fold Cross Validation on Training Data'],
+        ['ML Trained Model', 'Best Set of Parameters', 'F1-score on Testing Data'],
         ['Artificial Neural Networks (MLPClassifier)', grid_mlp.best_params_, f1_mlp_test],
         ['Support Vector Machine (SVC)', grid_svc.best_params_, f1_svc_test],
         ['Naive Bayes (BernoulliNB)', grid_bnb.best_params_, f1_bnb_test],
@@ -171,6 +173,7 @@ def main():
         f1_scores.append(testing_table[i][2])
     best_index = f1_scores.index(max(f1_scores)) + 1
 
+    print(result)
     print("Training ML Models:")
     print(tabulate(training_table, headers='firstrow', tablefmt='fancy_grid'))
     print("Testing ML Models:")
